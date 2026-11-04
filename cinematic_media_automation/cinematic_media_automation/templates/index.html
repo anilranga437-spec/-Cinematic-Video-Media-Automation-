@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinematic Studio | 308 Group</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="glow glow-one"></div><div class="glow glow-two"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-mark">308</div>
+      <div><p class="eyebrow">VIDEO AUTOMATION SUITE</p><h1>Cinematic <span>Studio</span></h1></div>
+      <div class="status-pill"><i></i> LOCAL PROCESSING</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">CREATE • ENHANCE • EXPORT</p>
+        <h2>Make every moment<br><span>cinematic.</span></h2>
+        <p class="intro">Batch-process MP4 videos with gold title treatments, brand watermarks and a smooth fade-in. Designed for premium event edits.</p>
+        <div class="feature-row"><span>✦ Gold title</span><span>◈ Watermark</span><span>◷ Fade-in</span></div>
+      </div>
+      <div class="hero-card"><div class="orbit"></div><p class="card-kicker">DEFAULT CLIENT</p><h3>ANIL</h3><p>308 GROUP</p><div class="gold-line"></div><small>CRAFTED TO MAKE AN IMPRESSION</small></div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}{% endif %}
+    {% endwith %}
+
+    <form class="studio-grid" action="{{ url_for('process') }}" method="post" enctype="multipart/form-data">
+      <section class="panel upload-panel">
+        <div class="section-heading"><div><p class="eyebrow">01 / SOURCE</p><h3>Upload your footage</h3></div><span class="step">MP4</span></div>
+        <label class="dropzone" for="videos">
+          <div class="upload-icon">↑</div><strong>Choose one or more MP4 videos</strong>
+          <span>Batch processing supported</span>
+          <input id="videos" name="videos" type="file" accept=".mp4,video/mp4" multiple required>
+          <small id="file-list">No files selected</small>
+        </label>
+        <div class="section-heading settings-title"><div><p class="eyebrow">02 / BRANDING</p><h3>Client & title</h3></div></div>
+        <div class="field-grid">
+          <label>Client name<input name="client_name" value="ANIL" maxlength="80"></label>
+          <label>Brand name<input name="brand_name" value="308 GROUP" maxlength="80"></label>
+          <label class="full">Event title<input name="event_title" value="HAPPY BIRTHDAY" maxlength="100"></label>
+          <label class="full">Subtitle<input name="subtitle" value="A CELEBRATION TO REMEMBER" maxlength="120"></label>
+        </div>
+      </section>
+
+      <section class="panel controls-panel">
+        <div class="section-heading"><div><p class="eyebrow">03 / FINISHING</p><h3>Visual treatment</h3></div><span class="step">PRO</span></div>
+        <label class="toggle-row"><span><strong>Golden dimensional title</strong><small>Event title + client name</small></span><input type="checkbox" name="show_title" checked><b class="switch"></b></label>
+        <label class="toggle-row"><span><strong>Brand watermark</strong><small>Use your uploaded logo or brand text</small></span><input type="checkbox" name="show_watermark" checked><b class="switch"></b></label>
+        <label class="file-label">Optional watermark logo<input type="file" name="watermark_image" accept=".png,.jpg,.jpeg,.webp"></label>
+        <div class="range-field"><div><label for="fade_duration">Fade-in duration</label><strong><output id="fade-output">2.0</output> sec</strong></div><input id="fade_duration" name="fade_duration" type="range" min="0" max="5" step="0.5" value="2"></div>
+        <div class="range-field"><div><label for="title_size">Title size</label><strong><output id="size-output">64</output> px</strong></div><input id="title_size" name="title_size" type="range" min="24" max="120" step="4" value="64"></div>
+        <div class="range-field"><div><label for="watermark_opacity">Watermark opacity</label><strong><output id="opacity-output">45</output>%</strong></div><input id="watermark_opacity" name="watermark_opacity" type="range" min="0" max="1" step="0.05" value="0.45"></div>
+        <button class="primary-button" type="submit"><span>✦</span> Process videos <span class="arrow">→</span></button>
+        <p class="privacy-note">Your videos are processed locally on this computer.</p>
+      </section>
+    </form>
+
+    <section class="ai-strip">
+      <div><p class="eyebrow">OPTIONAL AI TOOL</p><h3>Generate promotional captions</h3><p>Requires an API key. Video processing works without one.</p></div>
+      <form action="{{ url_for('generate_caption') }}" method="post" class="caption-form">
+        <input name="client_name" value="ANIL" aria-label="Client name">
+        <input name="event_title" value="HAPPY BIRTHDAY" aria-label="Event title">
+        <button class="secondary-button" type="submit">Generate captions ↗</button>
+      </form>
+    </section>
+    <footer><span>308 GROUP · CINEMATIC STUDIO</span><span>BUILT FOR THE MOMENT</span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

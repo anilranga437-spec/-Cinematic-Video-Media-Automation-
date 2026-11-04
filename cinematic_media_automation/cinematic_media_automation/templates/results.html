@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Export Complete | Cinematic Studio</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><main class="shell result-shell"><header class="topbar"><div class="brand-mark">308</div><div><p class="eyebrow">EXPORT REPORT</p><h1>Cinematic <span>Studio</span></h1></div></header>
+<section class="panel results-panel"><p class="eyebrow">PROCESSING FINISHED</p><h2>Your videos are ready<span>.</span></h2><p class="intro">Client: {{ client_name }} · Brand: {{ brand_name }}</p>
+{% for result in results %}<div class="result-item"><div><strong>{{ result.name }}</strong><small>{{ result.metadata.width }} × {{ result.metadata.height }} · {{ result.metadata.fps }} FPS · {{ result.metadata.duration }} sec · {{ result.metadata.frame_count }} frames</small></div><a class="secondary-button" href="{{ result.url }}">Download ↓</a></div>{% endfor %}
+{% if errors %}<div class="flash error"><strong>Some files could not be processed:</strong><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
+<a class="primary-button back-button" href="{{ url_for('index') }}">← Process more videos</a></section></main></body></html>
